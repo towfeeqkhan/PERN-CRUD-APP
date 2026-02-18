@@ -1,8 +1,10 @@
+import cors from "cors";
 import express from "express";
 import todoRoutes from "./routes/todo.route.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
