@@ -10,6 +10,22 @@ export const getAllTodos = async (req, res) => {
   }
 };
 
+export const getTodoById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const todo = await pool.query("SELECT * FROM todos WHERE id = $1", [id]);
+
+    if (todo.rows.length === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.json(todo.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
 export const createTodo = async (req, res) => {
   try {
     const { description } = req.body;
