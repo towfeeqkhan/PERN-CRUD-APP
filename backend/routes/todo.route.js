@@ -3,6 +3,7 @@ import {
   createTodo,
   getAllTodos,
   getTodoById,
+  updateTodo,
 } from "../controllers/todo.controller.js";
 
 const router = express.Router();
@@ -15,5 +16,8 @@ router.get("/:id", getTodoById);
 
 // Add new todo
 router.post("/", createTodo);
+
+// Update todo by ID
+router.put("/:id", updateTodo);
 
 export default router;

@@ -41,3 +41,26 @@ export const createTodo = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+export const updateTodo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { description, completed } = req.body;
+    const updatedTodo = await pool.query(
+      "UPDATE todos SET description = $1, completed = $2 WHERE id = $3 RETURNING *",
+      [description, completed, id],
+    );
+
+    if (updatedTodo.rows.length === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.json({
+      message: "Todo updated successfully",
+      todo: updatedTodo.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
