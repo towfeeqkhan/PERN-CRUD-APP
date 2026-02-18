@@ -1,5 +1,15 @@
 import pool from "../config/db.js";
 
+export const getAllTodos = async (req, res) => {
+  try {
+    const todos = await pool.query("SELECT * FROM todos ORDER BY id ASC");
+    res.json(todos.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
 export const createTodo = async (req, res) => {
   try {
     const { description } = req.body;
