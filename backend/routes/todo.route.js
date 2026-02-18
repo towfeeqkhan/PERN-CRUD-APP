@@ -4,6 +4,7 @@ import {
   getAllTodos,
   getTodoById,
   updateTodo,
+  toggleTodoStatus,
 } from "../controllers/todo.controller.js";
 
 const router = express.Router();
@@ -19,5 +20,8 @@ router.post("/", createTodo);
 
 // Update todo by ID
 router.put("/:id", updateTodo);
+
+// Toggle todo completion status
+router.patch("/:id/toggle", toggleTodoStatus);
 
 export default router;

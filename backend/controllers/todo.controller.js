@@ -64,3 +64,25 @@ export const updateTodo = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+export const toggleTodoStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const todo = await pool.query(
+      "UPDATE todos SET completed = NOT completed WHERE id = $1 RETURNING *",
+      [id],
+    );
+
+    if (todo.rows.length === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.json({
+      message: "Todo status toggled successfully",
+      todo: todo.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
