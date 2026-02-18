@@ -5,6 +5,7 @@ import {
   getTodoById,
   updateTodo,
   toggleTodoStatus,
+  deleteTodo,
 } from "../controllers/todo.controller.js";
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.put("/:id", updateTodo);
 
 // Toggle todo completion status
 router.patch("/:id/toggle", toggleTodoStatus);
+
+// Delete a todo by ID
+router.delete("/:id", deleteTodo);
 
 export default router;

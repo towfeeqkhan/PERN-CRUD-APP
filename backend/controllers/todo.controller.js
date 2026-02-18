@@ -86,3 +86,21 @@ export const toggleTodoStatus = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+export const deleteTodo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedTodo = await pool.query("DELETE FROM todos WHERE id = $1", [
+      id,
+    ]);
+
+    if (deletedTodo.rowCount === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.json({ message: "Todo deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
